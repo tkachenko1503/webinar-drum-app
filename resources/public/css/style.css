@@ -1,0 +1,23 @@
+html,
+body,
+#app {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: 'Quicksand', sans-serif;
+}
+
+#app {
+    display: flex;
+    background: #4FC3F7;
+}
+
+.drum-kit {
+    margin: auto;
+    width: 820px;
+    height: 492px;
+    background: #29B6F6;
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,0.16), 0 0 0 1px rgba(0,0,0,0.08);
+}
