@@ -1,11 +1,11 @@
 # CLJS webinar 
 
-Simple drum app for webinar 
+Simple drum app for my webinar 
 
 
 ## Run project
 
-Fro development im using Cursive
+For development i'm using Cursive
 and running `clojure.main` in normal JVM process,
 see the setup guide for figwheel - https://github.com/bhauman/lein-figwheel/wiki/Running-figwheel-in-a-Cursive-Clojure-REPL   
 
