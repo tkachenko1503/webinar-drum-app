@@ -1,15 +1,11 @@
 (defproject webinar "0.1.0-SNAPSHOT"
-  :description "FIXME: write this!"
-  :url "http://example.com/FIXME"
-  :license {:name "Eclipse Public License"
-            :url "http://www.eclipse.org/legal/epl-v10.html"}
+  :description "Simple drum app for my webinar"
 
   :min-lein-version "2.7.1"
 
   :dependencies [[org.clojure/clojure "1.8.0"]
                  [org.clojure/clojurescript "1.9.854"]
                  [figwheel-sidecar "0.5.12"]
-                 [org.clojure/core.async  "0.3.443" :exclusions [org.clojure/tools.reader]]
                  [reagent "0.7.0"]]
 
   :plugins [[lein-cljsbuild "1.1.7" :exclusions [[org.clojure/clojure]]]]
