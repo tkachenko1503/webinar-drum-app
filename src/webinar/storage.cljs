@@ -12,8 +12,8 @@
 
 
 (def drums
-  {:snare     {:name "Snare" :name-position 0.7 :size 1.2 :type :drum}
-   :kick      {:name "Kick" :name-position 1.8 :size 1.5 :type :drum}
+  {:kick      {:name "Kick" :name-position 1.8 :size 1.5 :type :drum}
+   :snare     {:name "Snare" :name-position 0.7 :size 1.2 :type :drum}
    :small-tom {:name "smallTom" :name-position 3.1 :size 1 :type :drum}
    :rack-tom  {:name "rackTom" :name-position 4.7 :size 1.1 :type :drum}
    :floor-tom {:name "floorTom" :name-position 6.4 :size 1.35 :type :drum}

@@ -174,7 +174,8 @@
      (when-not (cymbal? type)
        [:circle {:r  (- size 0.05)
                  :cx x
-                 :cy y}])
+                 :cy y
+                 :stroke-width 0.03}])
 
      [Text {:x x
             :y y}
