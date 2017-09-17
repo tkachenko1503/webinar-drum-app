@@ -11,13 +11,13 @@ body {
 
 #app {
     display: flex;
-    background: #4FC3F7;
+    background: #80CBC4;
 }
 
 .drum-kit {
     margin: auto;
     width: 820px;
     height: 492px;
-    background: #29B6F6;
+    background: #455A64;
     box-shadow: 0 2px 2px 0 rgba(0,0,0,0.16), 0 0 0 1px rgba(0,0,0,0.08);
 }

@@ -46,7 +46,9 @@
            {:fill        "#000"
             :stroke      "none"
             :font-size   "0.3px"
-            :text-anchor "middle"}
+            :text-anchor "middle"
+            :style       {:-webkit-user-select "none"
+                          :-moz-user-select    "none"}}
            params)
    text])
 
@@ -98,19 +100,18 @@
              :y       0
              :width   10
              :height  0.6
-             :opacity 0.2
+             :opacity 0.3
              :fill    "#FFF"}]]
 
     (mapv
       (fn [[drum-id drum] i]
-        [Text {:x        i
+        [Text {:x        (:name-position drum)
                :y        0.4
                :cursor   :pointer
                :on-click #(store/dispatch
                             :add-drum drum-id)}
          (:name drum)])
-      storage/drums
-      (iterate inc 1))))
+      storage/drums)))
 
 
 (defn ControlPanel
@@ -124,30 +125,53 @@
      [AddDrumPanel])])
 
 
+(defn playing?
+  "Answers is playing mode now"
+  [mode]
+  (= :play mode))
+
+
+(defn cymbal?
+  "Answers is type is cymbal"
+  [type]
+  (= type :cymbal))
+
+
+(defn drumActionAttrs
+  "Returns events handlers depends on current mode"
+  [drum-id mode]
+  (if (playing? mode)
+    {:on-click #(play drum-id)}
+
+    {:on-mouse-down #(store/dispatch
+                       :start-dragging-drum drum-id)}))
+
+
+(def drumCommonAttrs
+  {:stroke       "#000"
+   :stroke-width 0.01
+   :style        {:transform-origin "50% 50%"}})
+
+
 (defn Drum
   "Returns markup for single drum"
-  [[drum-id {:keys [x y]}] play-mode?]
-  (let [drum (get storage/drums drum-id)
-        size (:size drum)
-        type (:type drum)]
+  [[drum-id {:keys [x y]}] current-mode]
+  (let [drum        (get storage/drums drum-id)
+        size        (:size drum)
+        type        (:type drum)
+        drumActions (drumActionAttrs drum-id current-mode)
+        drumColor   {:fill (if (cymbal? type) "#FFCC80" "#FAFAFA")}
+        drumAttrs   (merge
+                      drumCommonAttrs
+                      drumActions
+                      drumColor)]
 
-    [:g {:stroke       "#000"
-         :stroke-width 0.01
-         :className    (str "drum_type_"
-                            (name type))
-         :fill         (if (= type :cymbal)
-                         "#FFF9C4"
-                         "#FAFAFA")
-         :style        {:transform-origin "50% 50%"
-                        :user-select      "none"}
-         :on-click     (when play-mode?
-                         #(play drum-id))}
-
+    [:g drumAttrs
      [:circle {:r  size
                :cx x
                :cy y}]
 
-     (when-not (= type :cymbal)
+     (when-not (cymbal? type)
        [:circle {:r  (- size 0.05)
                  :cx x
                  :cy y}])
@@ -156,23 +180,23 @@
             :y y}
       (:name drum)]
 
-     (when play-mode?
+     (when (playing? current-mode)
        drum-animation)]))
 
 
 (defn App
   "Returns app markup"
   [state]
-  (let [app-state  @state
-        kit        (:kit app-state)
-        play-mode? (= (:app-mode app-state) :play)]
+  (let [app-state    @state
+        kit          (:kit app-state)
+        current-mode (:app-mode app-state)]
 
     [:div.drum-kit
 
      (into
-       [:svg.canvas {:view-box "0 0 10 6"
+       [:svg#canvas {:view-box "0 0 10 6"
                      :overflow "visible"}
         [ControlPanel app-state]]
 
        (for [drum kit]
-         [Drum drum play-mode?]))]))
+         [Drum drum current-mode]))]))
